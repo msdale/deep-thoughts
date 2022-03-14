@@ -23,13 +23,13 @@ db.once('open', async () => {
   // create friends
   for (let i = 0; i < 100; i += 1) {
     const randomUserIndex = Math.floor(Math.random() * createdUsers.length);
-    const { _id: userId } = createdUsers.ops[randomUserIndex];
+    const { _id: userId } = createdUsers[randomUserIndex];
 
     let friendId = userId;
 
     while (friendId === userId) {
       const randomUserIndex = Math.floor(Math.random() * createdUsers.length);
-      friendId = createdUsers.ops[randomUserIndex];
+      friendId = createdUsers[randomUserIndex];
     }
 
     await User.updateOne({ _id: userId }, { $addToSet: { friends: friendId } });
@@ -41,7 +41,7 @@ db.once('open', async () => {
     const thoughtText = faker.lorem.words(Math.round(Math.random() * 20) + 1);
 
     const randomUserIndex = Math.floor(Math.random() * createdUsers.length);
-    const { username, _id: userId } = createdUsers.ops[randomUserIndex];
+    const { username, _id: userId } = createdUsers[randomUserIndex];
 
     const createdThought = await Thought.create({ thoughtText, username });
 
@@ -58,7 +58,7 @@ db.once('open', async () => {
     const reactionBody = faker.lorem.words(Math.round(Math.random() * 20) + 1);
 
     const randomUserIndex = Math.floor(Math.random() * createdUsers.length);
-    const { username } = createdUsers.ops[randomUserIndex];
+    const { username } = createdUsers[randomUserIndex];
 
     const randomThoughtIndex = Math.floor(Math.random() * createdThoughts.length);
     const { _id: thoughtId } = createdThoughts[randomThoughtIndex];
